@@ -40,6 +40,7 @@ while(True):
 
     if data==83 :
         print('color')
+        uart.write('S')
         send=[0,0,0,0]
         for i in range(50):
             #Type of frame for color
