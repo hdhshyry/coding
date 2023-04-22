@@ -122,10 +122,18 @@ while(True):
     print(send)
     if send[0]=1:
         uart.write("r")
+    else:
+        uart.write("a")
     if send[1]=1:
         uart.write("y")
+    else:
+        uart.write("b")
     if send[2]=1:
         uart.write("h")
+    else:
+        uart.write("c")
     if send[-1]=1:
         uart.write("s")
+    else:
+        uart.write("d")
 
