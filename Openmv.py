@@ -40,8 +40,8 @@ while(True):
 
     if data==83 :
         print('color')
+        send=[0,0,0,0]
         for i in range(50):
-            send=[0,0,0,0]
             #Type of frame for color
             sensor.set_framesize(sensor.QVGA)
             sensor.set_pixformat(sensor.RGB565)
@@ -119,21 +119,25 @@ while(True):
             if Sg:
                 print("Detected S")
                 send[-1]=1
+
+        if send[0]==1:
+            uart.write("r")
+        else:
+            uart.write("a")
+        if send[1]==1:
+            uart.write("y")
+        else:
+            uart.write("b")
+        if send[2]==1:
+            uart.write("h")
+        else:
+            uart.write("c")
+        if send[-1]==1:
+            uart.write("s")
+        else:
+            uart.write("d")
     print(send)
-    if send[0]=1:
-        uart.write("r")
-    else:
-        uart.write("a")
-    if send[1]=1:
-        uart.write("y")
-    else:
-        uart.write("b")
-    if send[2]=1:
-        uart.write("h")
-    else:
-        uart.write("c")
-    if send[-1]=1:
-        uart.write("s")
-    else:
-        uart.write("d")
+    print(send[0])
+
+
 
