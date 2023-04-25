@@ -59,11 +59,11 @@ while(True):
                     send[1]=1
                         #char y=121 byte
         print('letter')
-        for i in range(50):
+        for i in range(360):
            #Type of frame for letter
             sensor.set_framesize(sensor.QQCIF)
             sensor.set_pixformat(sensor.GRAYSCALE)
-            img= sensor.snapshot()
+            img= sensor.snapshot().rotation_corr(0,0,i)
             #Search for letter H
             Ha = img.find_template(template1, 0.6, step=4, search=SEARCH_EX)
             Hb = img.find_template(template2, 0.6, step=4, search=SEARCH_EX)
