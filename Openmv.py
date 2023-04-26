@@ -5,7 +5,7 @@ from pyb import Pin
 from pyb import UART
 from image import SEARCH_EX, SEARCH_DS
 thresholds = [(41, 70, 46, 81, 29, 63),(75, 95, -19, 8, 53, 96),(53, 76, -21, -3, -56, -19)]
-send=[0,0,0,0]
+send=[0,0,0,0,0]
 #camera sitting
 sensor.reset()
 sensor.set_contrast(1)
@@ -32,6 +32,14 @@ template10 = image.Image("/S3.pgm")
 template11 = image.Image("/S4.pgm")
 template12 = image.Image("/S5.pgm")
 template13 = image.Image("/S6.pgm")
+#Load sample of letter U
+template14 = image.Image("/U0.pgm")
+template15= image.Image("/U1.pgm")
+template16= image.Image("/U2.pgm")
+template17 = image.Image("/U3.pgm")
+template18 = image.Image("/U4.pgm")
+template19 = image.Image("/U5.pgm")
+template20 = image.Image("/U6.pgm")
 data=[]
 while(True):
     data=uart.readchar()
@@ -41,7 +49,7 @@ while(True):
     if data==83 :
         print('color')
         uart.write('S')
-        send=[0,0,0,0]
+        send=[0,0,0,0,0]
         for i in range(50):
             #Type of frame for color
             sensor.set_framesize(sensor.QVGA)
@@ -65,20 +73,28 @@ while(True):
             sensor.set_pixformat(sensor.GRAYSCALE)
             img= sensor.snapshot().rotation_corr(0,0,i)
             #Search for letter H
-            Ha = img.find_template(template1, 0.6, step=4, search=SEARCH_EX)
-            Hb = img.find_template(template2, 0.6, step=4, search=SEARCH_EX)
-            Hc = img.find_template(template3, 0.6, step=4, search=SEARCH_EX)
-            Hd = img.find_template(template4, 0.6, step=4, search=SEARCH_EX)
-            He = img.find_template(template5, 0.6, step=4, search=SEARCH_EX)
-            Hf = img.find_template(template6, 0.6, step=4, search=SEARCH_EX)
+            Ha = img.find_template(template1, 0.7, step=4, search=SEARCH_EX)
+            Hb = img.find_template(template2, 0.7, step=4, search=SEARCH_EX)
+            Hc = img.find_template(template3, 0.7, step=4, search=SEARCH_EX)
+            Hd = img.find_template(template4, 0.7, step=4, search=SEARCH_EX)
+            He = img.find_template(template5, 0.7, step=4, search=SEARCH_EX)
+            Hf = img.find_template(template6, 0.7, step=4, search=SEARCH_EX)
             #Search for letter S
-            Sa = img.find_template(template7, 0.6, step=4, search=SEARCH_EX)
-            Sb = img.find_template(template8, 0.6, step=4, search=SEARCH_EX)
-            Sc = img.find_template(template9, 0.6, step=4, search=SEARCH_EX)
-            Sd = img.find_template(template10, 0.6, step=4, search=SEARCH_EX)
-            Se = img.find_template(template11, 0.6, step=4, search=SEARCH_EX)
-            Sf = img.find_template(template12, 0.6, step=4, search=SEARCH_EX)
-            Sg = img.find_template(template13, 0.6, step=4, search=SEARCH_EX)
+            Sa = img.find_template(template7, 0.7, step=4, search=SEARCH_EX)
+            Sb = img.find_template(template8, 0.7, step=4, search=SEARCH_EX)
+            Sc = img.find_template(template9, 0.7, step=4, search=SEARCH_EX)
+            Sd = img.find_template(template10, 0.7, step=4, search=SEARCH_EX)
+            Se = img.find_template(template11, 0.7, step=4, search=SEARCH_EX)
+            Sf = img.find_template(template12, 0.7, step=4, search=SEARCH_EX)
+            Sg = img.find_template(template13, 0.7, step=4, search=SEARCH_EX)
+            #Search for letter U
+            Ua = img.find_template(template14, 0.7, step=4, search=SEARCH_EX)
+            Ub = img.find_template(template15, 0.7, step=4, search=SEARCH_EX)
+            Uc = img.find_template(template16, 0.7, step=4, search=SEARCH_EX)
+            Ud = img.find_template(template17, 0.7, step=4, search=SEARCH_EX)
+            Ue = img.find_template(template18, 0.7, step=4, search=SEARCH_EX)
+            Uf = img.find_template(template19, 0.7, step=4, search=SEARCH_EX)
+            Ug = img.find_template(template20, 0.7, step=4, search=SEARCH_EX)
             if Ha:
             #char h=104 byte
                 print("Detected H")
@@ -120,6 +136,27 @@ while(True):
             if Sg:
                 print("Detected S")
                 send[-1]=1
+            if Ua:
+                print("Detected U")
+                send[-3]=1
+            if Ub:
+                print("Detected U")
+                send[-3]=1
+            if Uc:
+                print("Detected U")
+                send[-3]=1
+            if Ud:
+                print("Detected U")
+                send[-3]=1
+            if Ue:
+                print("Detected U")
+                send[-3]=1
+            if Uf:
+                print("Detected U")
+                send[-3]=1
+            if Ug:
+                print("Detected U")
+                send[-3]=1
 
         if send[0]==1:
             uart.write("r")
@@ -129,7 +166,7 @@ while(True):
             uart.write("y")
         else:
             uart.write("b")
-        if send[2]==1:
+        if send[-2]==1:
             uart.write("h")
         else:
             uart.write("c")
@@ -137,6 +174,10 @@ while(True):
             uart.write("s")
         else:
             uart.write("d")
+        if send[-3]==1:
+            uart.write("u")
+        else:
+            uart.write("e")
     print(send)
     print(send[0])
 

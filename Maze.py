@@ -15,7 +15,7 @@ sensor.set_auto_gain(False)
 sensor.set_auto_whitebal(False)
 clock = time.clock()
 #Load sample of letter
-template1 = image.Image("/H..pgm")
+template1 = image.Image("/U0.pgm")
 template2 = image.Image("/S.pgm")
 template4 = image.Image("/1.pgm")
 template3 = image.Image("/h.pgm")
@@ -50,7 +50,7 @@ while (True):
     if harmed:
         img.draw_rectangle(harmed,5)
         #ser.write(0x01)
-        print("Detected H")
+        print("Detected U")
     if ff:
         img.draw_rectangle(ff,5)
         #ser.write(0x01)
