@@ -1,4 +1,4 @@
-# Maze - By: Moalem - Fri Apr 21 2023
+# Maze - By: Moalem -0 Fri Apr 21 2023
 #p4=Tx p5=Rx
 import sensor, image, time, math, pyb
 from pyb import Pin
@@ -6,6 +6,7 @@ from pyb import UART
 from image import SEARCH_EX, SEARCH_DS
 thresholds = [(41, 70, 46, 81, 29, 63),(75, 95, -19, 8, 53, 96),(53, 76, -21, -3, -56, -19)]
 send=[0,0,0,0,0]
+a=0
 #camera sitting
 sensor.reset()
 sensor.set_contrast(1)
@@ -39,7 +40,7 @@ template16= image.Image("/U2.pgm")
 template17 = image.Image("/U3.pgm")
 template18 = image.Image("/U4.pgm")
 template19 = image.Image("/U5.pgm")
-template20 = image.Image("/U6.pgm")
+#template20 = image.Image("/U6.pgm")
 data=[]
 while(True):
     data=uart.readchar()
@@ -67,11 +68,11 @@ while(True):
                     send[1]=1
                         #char y=121 byte
         print('letter')
-        for i in range(360):
+        for i in range(72):
            #Type of frame for letter
             sensor.set_framesize(sensor.QQCIF)
             sensor.set_pixformat(sensor.GRAYSCALE)
-            img= sensor.snapshot().rotation_corr(0,0,i)
+            img= sensor.snapshot().rotation_corr(0,0,a)
             #Search for letter H
             Ha = img.find_template(template1, 0.7, step=4, search=SEARCH_EX)
             Hb = img.find_template(template2, 0.7, step=4, search=SEARCH_EX)
@@ -157,6 +158,7 @@ while(True):
             if Ug:
                 print("Detected U")
                 send[-3]=1
+            a+=5
 
         if send[0]==1:
             uart.write("r")
